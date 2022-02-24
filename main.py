@@ -1,6 +1,7 @@
 import random
 import sys
 import os
+from art import logo
 
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
@@ -46,6 +47,8 @@ def compare(user_score, computer_score, user_cards, computer_cards):
 
 def game():
 
+    print(logo)
+
     user_cards = []
     computer_cards = []
 
@@ -57,8 +60,7 @@ def game():
     computer_score = calculate_score(computer_cards)
 
     while user_score != 0 and computer_score != 0 and user_score <= 21:
-        print(user_cards)
-        print(user_score)
+        print(f"Your score: {user_score}. Your cards: {user_cards}")
         another = input("Draw another card? (y/n) ").casefold()
         if another == 'n' or another == 'no':
             break
