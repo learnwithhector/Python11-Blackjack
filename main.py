@@ -1,4 +1,6 @@
 import random
+import sys
+import os
 
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
@@ -18,7 +20,7 @@ def calculate_score(cards):
     return score
 
 
-def compare(user_score, computer_score):
+def compare(user_score, computer_score, user_cards, computer_cards):
     if user_score == 0:
         user_score = 'Blackjack'
 
@@ -42,28 +44,39 @@ def compare(user_score, computer_score):
         print("You lose!")
 
 
-user_cards = []
-computer_cards = []
+def game():
 
-for x in range(2):
-    user_cards.append(deal_card())
-    computer_cards.append(deal_card())
+    user_cards = []
+    computer_cards = []
 
-user_score = calculate_score(user_cards)
-computer_score = calculate_score(computer_cards)
+    for x in range(2):
+        user_cards.append(deal_card())
+        computer_cards.append(deal_card())
 
-while user_score != 0 and computer_score != 0 and user_score <= 21:
-    print(user_cards)
-    print(user_score)
-    another = input("Draw another card? (y/n) ").casefold()
-    if another == 'n' or another == 'no':
-        break
-    user_cards.append(deal_card())
     user_score = calculate_score(user_cards)
-
-while computer_score < 17:
-    computer_cards.append(deal_card())
     computer_score = calculate_score(computer_cards)
 
+    while user_score != 0 and computer_score != 0 and user_score <= 21:
+        print(user_cards)
+        print(user_score)
+        another = input("Draw another card? (y/n) ").casefold()
+        if another == 'n' or another == 'no':
+            break
+        user_cards.append(deal_card())
+        user_score = calculate_score(user_cards)
 
-compare(user_score, computer_score)
+    while computer_score < 17:
+        computer_cards.append(deal_card())
+        computer_score = calculate_score(computer_cards)
+
+
+    compare(user_score, computer_score, user_cards, computer_cards)
+    again = input("Another game? (y/n)").casefold()
+    if again == 'n' or again == 'no':
+        sys.exit()
+    else:
+        os.system('clear')
+        game()
+
+
+game()
